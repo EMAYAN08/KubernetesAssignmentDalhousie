@@ -1,0 +1,17 @@
+steps:
+  # Build Container 2 image
+  # REFERENCE: https://cloud.google.com/artifact-registry/docs/integrate-gke
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/k8-assignment-app/container2/cnt2', './']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/k8-assignment-app/container2/cnt2']
+  
+  # Deploy Container 2 to GKE
+  # REFERENCE: https://cloud.google.com/build/docs/deploying-builds/deploy-gke
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    args:
+      - run
+      - --filename=./K8_manifests/
+      - --image=us-central1-docker.pkg.dev/k8-assignment-app/container2/cnt2
+      - --location=us-central1-a
+      - --cluster=emayan-assignment-cluster

@@ -1,0 +1,26 @@
+services:
+
+  container1:
+    build: 
+      context: ./microservice-container1
+    #image: emayanvadivel/kubernetes-app-container1:image1
+    ports:
+      - 6000:6000
+    networks:
+      - microservice-network
+    volumes:
+      - ./:/Emayan_PV_dir
+
+  container2:
+    build: 
+      context: ./microservice-container2
+    #image: emayanvadivel/kubernetes-app-container2:image2
+    networks:
+      - microservice-network
+    volumes:
+      - ./:/Emayan_PV_dir
+
+networks:
+
+  microservice-network:
+      driver: bridge
